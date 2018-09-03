@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Genetic Algorithm - Finite State Machine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+</head>
+<body>
+
+  <article className="ga-robot">
+    <h2>Evolve a Cleaning Robot</h2>
+
+    <p>
+      A genetic algorithm optimizes a robot's strategy to clean a littered room. This is based on an example genetic algorithm posed in <a href="http://web.cecs.pdx.edu/~mm/">Dr. Melanie Mitchell</a>'s <cite><a href="https://www.amazon.com/Complexity-Guided-Tour-Melanie-Mitchell/dp/0199798109/ref=tmm_pap_title_0">Complexity: A Guided Tour</a></cite>.
+    </p>
+
+    <h3>Design</h3>
+
+    <p>
+      The robot can see the 5 squares of its <a href="https://en.wikipedia.org/wiki/Von_Neumann_neighborhood">Von Neumann neighborhood</a>, where there are 3 possible values for a square: <em>Clean</em>, <em>Dirty</em>, or a <em>Wall</em>. Because of this, there are <code title="square_types ^ visible_squares">3<sup>5</sup> = 243</code> possible states. For each possible state there is a corresponding action (gene) in the strategy (genome).
+    </p>
+    <p>
+      Robbie looks up which strategy to follow in its genome, then is rewarded (if it picks up a can) or punished (if it hits a wall or bends over where there is no can) to determine the strategy's <em>fitness</em>. This is done on an entire population of strategies comprising the first generation, then the fittest individuals are selected using <a href="https://en.wikipedia.org/wiki/Tournament_selection">tournament selection
+      </a>.
+    </p>
+
+    <section>
+      <h3>Interactive Simulation</h3>
+      <p>Click on <em>Run Evolution</em> below to start evolving an efficient genome for the robot.</p>
+      <div className="columns-wrapper">
+        <!-- {/* GA Controls */} -->
+        <section>
+          <h4>Genetic Algorithm Controls</h4>
+          <!-- {this.state.isRunning ? (
+          <button onClick={this.stop}>Stop</button>
+          ) : (
+          <button onClick={this.start}>Run Evolution</button>
+          )} -->
+          <div className="logs">
+            <table>
+              <thead>
+                <tr>
+                  <th>Gen #</th>
+                  <th>Mean</th>
+                  <th>Best</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- {this.state.logs.map((gen, i) => (
+                <tr key={i}>
+                  <td>{gen.number}</td>
+                  <td>{gen.mean}</td>
+                  <td>{gen.best}</td>
+                </tr>
+                ))} -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Fitness Simulation Preview -->
+        <!-- <FitnessPreview individual={this.state.best} /> -->
+      </div>
+    </section>
+
+    <h3>Genetic Algorithm Overview</h3>
+
+    <p>
+      This is a relatively simple genetic algorithm that uses the basic steps of <em>initialization</em>, <em>fitness determination</em>, <em>selection</em>, <em>crossover</em>, and <em>mutation</em> to search a vast number of possible strategies for a decent learned strategy. In this case, we search <code title="num_alleles ^ genome_length">7<sup>243</sup> &cong; 2.28&times;10<sup>205</sup></code> possible genomes for a good strategy.
+    </p>
+    <p>
+      The basic structure of the algorithm is:
+    </p>
+
+    <ol>
+      <li>Create a population of random strategies</li>
+      <li>
+        <span>Get the fitness of each genomes by averaging 50 runs of the following:</span>
+        <ol type="a">
+          <li>Build a world with walls and random litter</li>
+          <li>Place Robbie in the world with a genome</li>
+          <li>Reward and punish Robbie according to its performance</li>
+        </ol>
+      </li>
+      <li>Select the fittest individuals for reproduction using <a href="https://en.wikipedia.org/wiki/Tournament_selection">tournament selection</a></li>
+      <li>Breed children using <a href="https://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)#Single-point_crossover">single-point crossover </a></li>
+      <li>Randomly change some genes using <a href="https://en.wikipedia.org/wiki/Mutation_(genetic_algorithm)">uniform mutation</a></li>
+      <li>Repeat steps 2 through 5, each repetition corresponding to a generation</li>
+    </ol>
+
+  </article>
+
+  <script src="dist/main.js" type="module"></script>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "robot-ga",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "files": [ "dist", "index.html" ],
+  "scripts": {
+    "build": "wp --mode=production",
+    "dev": "wp --mode=development --watch",
+    "prepare": "npm run build"
+  },
+  "author": "Ben Duncan <ben@cascadiaconcepts.com> (http://benduncan.me)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bendman/robot-ga.git"
+  },
+  "dependencies": {
+    "webpack": "4.17.1",
+    "webpack-command": "0.4.1"
+  }
+}
