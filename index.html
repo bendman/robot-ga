@@ -33,11 +33,7 @@
         <!-- {/* GA Controls */} -->
         <section>
           <h4>Genetic Algorithm Controls</h4>
-          <!-- {this.state.isRunning ? (
-          <button onClick={this.stop}>Stop</button>
-          ) : (
-          <button onClick={this.start}>Run Evolution</button>
-          )} -->
+          <button id="toggle_button">Start Evolution</button>
           <div className="logs">
             <table>
               <thead>
@@ -47,7 +43,7 @@
                   <th>Best</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="output_table">
                 <!-- {this.state.logs.map((gen, i) => (
                 <tr key={i}>
                   <td>{gen.number}</td>

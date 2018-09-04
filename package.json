@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.html",
-  "files": [ "dist", "index.html" ],
+  "files": [
+    "dist",
+    "index.html"
+  ],
   "scripts": {
     "build": "wp --mode=production",
     "dev": "wp --mode=development --watch",
@@ -18,5 +21,8 @@
   "dependencies": {
     "webpack": "4.17.1",
     "webpack-command": "0.4.1"
+  },
+  "devDependencies": {
+    "webpack-serve": "2.0.2"
   }
 }
