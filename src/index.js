@@ -93,6 +93,7 @@ model.addEventListener('generation', (event) => {
   const { best, mean, isRunningBest } = event.detail;
   if (isRunningBest) {
     simulation.set(best);
+    simulation.play();
   }
   output.insertAdjacentHTML('afterbegin', `
     <tr class="${isRunningBest ? 'new-best' : ''}" data-gen="${best.generation}">

@@ -33,8 +33,9 @@ class Simulation {
     this._genome = genome;
     this._element = simulationTgt;
     this._stepNum = 0;
-    this._isPlaying = false;
+    this.isPlaying = false;
     this._fitness = 0;
+    this._frameTime = 200;
     this.pause = this.pause.bind(this);
     this.step = this.step.bind(this);
     this.play = this.play.bind(this);
@@ -71,7 +72,7 @@ class Simulation {
     this._simSpeed = this._element.querySelector('.sim__speed');
     this._stepOutput = this._element.querySelector('.sim__step-num');
     this._fitnessOutput = this._element.querySelector('.sim__fit-points');
-    this._frameTime = Number.parseInt(this._simSpeed.value, 10);
+    this._simSpeed.value = this._frameTime;
     this._setup();
     this._updateButtons();
 
@@ -83,8 +84,8 @@ class Simulation {
   }
 
   _updateButtons() {
-    this._playButton.disabled = this._isPlaying;
-    this._pauseButton.disabled = !this._isPlaying;
+    this._playButton.disabled = this.isPlaying;
+    this._pauseButton.disabled = !this.isPlaying;
   }
 
   _handleSpeedChange(event) {
@@ -145,10 +146,10 @@ class Simulation {
       this._setup();
     }
 
-    this._isPlaying = true;
+    this.isPlaying = true;
     this._updateButtons();
 
-    while (this._isPlaying && this._stepNum < 200) {
+    while (this.isPlaying && this._stepNum < 200) {
       this.step();
       // eslint-disable-next-line no-await-in-loop
       await sleep(this._frameTime);
@@ -161,7 +162,7 @@ class Simulation {
    * Pause the current animation
    */
   pause() {
-    this._isPlaying = false;
+    this.isPlaying = false;
     this._updateButtons();
   }
 

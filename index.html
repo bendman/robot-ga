@@ -26,18 +26,19 @@
       Robbie looks up which strategy to follow in its genome, then is rewarded (if it picks up a can) or punished (if it hits a wall or bends over where there is no can) to determine the strategy's <em>fitness</em>. This is done on an entire population of strategies comprising the first generation, then the fittest individuals are selected using <a href="https://en.wikipedia.org/wiki/Tournament_selection">tournament selection</a>.
     </p>
 
-    <section>
+    <section class="sim-container">
       <h3>Interactive Simulation</h3>
+      <button id="toggle-button">Start Evolution</button>
       <div class="columns-wrapper">
         <!-- Fitness Simulation Preview -->
-        <p>Simulate a robot acting out it's genome in a random environment.</p>
-        <figure id="simulation-preview"></figure>
+        <section>
+          <p>Simulate a single genome in a random environment.</p>
+          <figure id="simulation-preview"></figure>
+        </section>
 
         <!-- {/* GA Controls */} -->
         <section>
-          <h4>Genetic Algorithm Controls</h4>
-          <p>Click on <em>Start Evolution</em> below to start evolving an efficient genome for the robot.</p>
-          <button id="toggle-button">Start Evolution</button>
+          <p>Control the evolution of the algorithm.</p>
           <div class="logs">
             <table>
               <thead>
