@@ -52,9 +52,9 @@ class Simulation {
           <section><output class="sim__fit-points"></output> Points</section>
         </section>
         <section class="sim__controls">
-          <button class="sim__pause">Pause</button>
-          <button class="sim__step">Step</button>
-          <button class="sim__play">Start</button>
+          <button class="sim__pause"><i class="material-icons">pause</i></button>
+          <button class="sim__step"><i class="material-icons">skip_next</i></button>
+          <button class="sim__play"><i class="material-icons">play_arrow</i></button>
           <select class="sim__speed">
             <option value="1000">Slow</option>
             <option value="200">Normal</option>
@@ -87,8 +87,8 @@ class Simulation {
     this._pauseButton.disabled = !this._isPlaying;
   }
 
-  _handleSpeedChange(e) {
-    this._frameTime = Number.parseInt(e.currentTarget.value, 10);
+  _handleSpeedChange(event) {
+    this._frameTime = Number.parseInt(event.currentTarget.value, 10);
   }
 
   _setup() {
@@ -141,6 +141,10 @@ class Simulation {
    * Start the animation loop
    */
   async play() {
+    if (this._stepNum === 200) {
+      this._setup();
+    }
+
     this._isPlaying = true;
     this._updateButtons();
 
@@ -150,7 +154,7 @@ class Simulation {
       await sleep(this._frameTime);
     }
 
-    this._isPlaying = false;
+    this.pause();
   }
 
   /**

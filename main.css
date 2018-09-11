@@ -43,10 +43,17 @@ a:hover {
 
 .logs table {
   width: 100%;
+  border-spacing: 1px;
+}
+
+.logs tbody tr:hover {
+  cursor: pointer;
+  background: skyblue;
 }
 
 .logs td {
   text-align: right;
+  padding: 0 1em;
 }
 
 .new-best {

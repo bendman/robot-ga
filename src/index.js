@@ -103,4 +103,12 @@ model.addEventListener('generation', (event) => {
   `);
 });
 
+output.addEventListener('click', (event) => {
+  const row = event.target.closest('tr');
+  if (!row || !row.dataset.gen) { return; }
+
+  const generation = model.getGeneration(Number.parseInt(row.dataset.gen, 10));
+  simulation.set(generation.bestIndividual);
+});
+
 window.model = model;
