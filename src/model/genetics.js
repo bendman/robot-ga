@@ -4,22 +4,15 @@ import {
   compareFitness,
 } from './individual';
 
-export const breedGeneration = (oldPopulation) => {
-  const parents = selection(oldPopulation);
-  let children = reproduce(parents);
-  children.forEach(child => mutate(child));
-  return children
-};
-
 // Return a shuffled copy of an array
 const shuffle = (list) => {
-	list = list.slice();
-	for (let i = list.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			[list[i], list[j]] = [list[j], list[i]];
-	}
-	return list;
-}
+  list = list.slice();
+  for (let i = list.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [list[i], list[j]] = [list[j], list[i]];
+  }
+  return list;
+};
 
 // Return a random selection of items from an array
 const choices = (list, count) => shuffle(list).slice(0, count);
@@ -42,7 +35,7 @@ const reproduce = (population) => {
 
   for (let i = 0; i < population.length; i += 2) {
     const parentA = population[i].genome;
-    const parentB = population[i+1].genome;
+    const parentB = population[i + 1].genome;
 
     const split = Math.floor(Math.random() * 243);
     const genomeA = parentA.slice(0, split).concat(parentB.slice(split));
@@ -60,5 +53,13 @@ const mutate = (individual) => {
     Math.random() < 0.015
       ? randomAction()
       : gene
-  ))
+  ));
+};
+
+// eslint-disable-next-line import/prefer-default-export
+export const breedGeneration = (oldPopulation) => {
+  const parents = selection(oldPopulation);
+  const children = reproduce(parents);
+  children.forEach(child => mutate(child));
+  return children;
 };

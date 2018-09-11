@@ -12,12 +12,12 @@ import {
   breedGeneration,
 } from './model/genetics';
 
-const worker = self;
+const worker = self; // eslint-disable-line no-restricted-globals
 let isRunning = false;
 let overallBest = null;
 let latestPopulation = null;
 
-const randomPopulation = (count) => (Array(count)).fill().map(() => createIndividual(0));
+const randomPopulation = count => (Array(count)).fill().map(() => createIndividual(0));
 
 const generationStep = (population) => {
   const popFitness = populationFitness(population);
@@ -26,7 +26,7 @@ const generationStep = (population) => {
   const genI = population[0].generation;
 
   if (!overallBest || bestFitness > overallBest.fitness) {
-    overallBest = population[0];
+    [overallBest] = population;
   }
 
   worker.postMessage({
@@ -34,7 +34,7 @@ const generationStep = (population) => {
     meanFitness: popFitness,
     bestIndividual: population[0],
   });
-  
+
   // Assign directly because we don't need to re-render for each generation
   return breedGeneration(population);
 };
@@ -64,10 +64,5 @@ const messageHandlers = {
 
 // Inbound message controller
 worker.addEventListener('message', (event) => {
-  if (!event.data || !event.data.action || !messageHandlers.hasOwnProperty(event.data.action)) {
-    console.warn('Unhandled Worker Message Received: ', event.data.action);
-    return;
-  }
-
   messageHandlers[event.data.action](event.data.arguments);
 });

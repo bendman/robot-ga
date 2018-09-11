@@ -18,17 +18,17 @@ import {
 const TRIALS = 20;
 
 const currentBase = 1;
-const northBase   = 3;
-const southBase   = 9;
-const eastBase    = 27;
-const westBase    = 81;
+const northBase = 3;
+const southBase = 9;
+const eastBase = 27;
+const westBase = 81;
 
 const getSensedState = (floorMap, x, y) => (
-  northBase * floorMap[y - 1][x] +
-  southBase * floorMap[y + 1][x] +
-  eastBase * floorMap[y][x + 1] +
-  westBase * floorMap[y][x - 1] +
-  currentBase * floorMap[y][x]
+  northBase * floorMap[y - 1][x]
+  + southBase * floorMap[y + 1][x]
+  + eastBase * floorMap[y][x + 1]
+  + westBase * floorMap[y][x - 1]
+  + currentBase * floorMap[y][x]
 );
 
 export const fitnessStep = (floorMap, individual, x, y) => {
@@ -52,20 +52,20 @@ export const fitnessStep = (floorMap, individual, x, y) => {
     action = randomMove();
   }
 
-  if (action == MoveNorth && floorMap[y - 1][x] !== WALL) {
+  if (action === MoveNorth && floorMap[y - 1][x] !== WALL) {
     y--;
-  } else if (action == MoveSouth && floorMap[y + 1][x] != WALL) {
+  } else if (action === MoveSouth && floorMap[y + 1][x] !== WALL) {
     y++;
-  } else if (action == MoveEast && floorMap[y][x + 1] != WALL) {
+  } else if (action === MoveEast && floorMap[y][x + 1] !== WALL) {
     x++;
-  } else if (action == MoveWest && floorMap[y][x - 1] != WALL) {
+  } else if (action === MoveWest && floorMap[y][x - 1] !== WALL) {
     x--;
   } else {
     // Ran into a wall
     fitness -= 5;
   }
 
-  return [x, y, fitness]
+  return [x, y, fitness];
 };
 
 const checkFitness = (individual, floorMap) => {
@@ -91,7 +91,7 @@ const avgFitness = (individual) => {
 
   individual.fitness = totalFitness / TRIALS;
   return individual.fitness;
-}
+};
 
 export const populationFitness = (population) => {
   const totalFitness = population.reduce((total, individual) => total + avgFitness(individual), 0);
