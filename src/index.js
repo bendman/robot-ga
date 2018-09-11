@@ -61,18 +61,18 @@ class Model extends EventTarget {
   }
 }
 
-const model = new Model(document.getElementById('output_table'));
+const model = new Model(document.getElementById('output-table'));
 
 //
 // Simulation Preview
 //
-const previewTgt = document.getElementById('simulation_preview');
+const previewTgt = document.getElementById('simulation-preview');
 const simulation = new Simulation(previewTgt);
 
 //
 // Toggling GA
 //
-const toggler = document.getElementById('toggle_button');
+const toggler = document.getElementById('toggle-button');
 
 toggler.addEventListener('click', () => {
   if (model.isRunning) {
@@ -87,7 +87,7 @@ toggler.addEventListener('click', () => {
 //
 // GA Results
 //
-const output = document.getElementById('output_table');
+const output = document.getElementById('output-table');
 
 model.addEventListener('generation', (event) => {
   const { best, mean, isRunningBest } = event.detail;

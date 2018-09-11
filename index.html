@@ -22,8 +22,7 @@
       The robot can see the 5 squares of its <a href="https://en.wikipedia.org/wiki/Von_Neumann_neighborhood">Von Neumann neighborhood</a>, where there are 3 possible values for a square: <em>Clean</em>, <em>Dirty</em>, or a <em>Wall</em>. Because of this, there are <code title="square_types ^ visible_squares">3<sup>5</sup> = 243</code> possible states. For each possible state there is a corresponding action (gene) in the strategy (genome).
     </p>
     <p>
-      Robbie looks up which strategy to follow in its genome, then is rewarded (if it picks up a can) or punished (if it hits a wall or bends over where there is no can) to determine the strategy's <em>fitness</em>. This is done on an entire population of strategies comprising the first generation, then the fittest individuals are selected using <a href="https://en.wikipedia.org/wiki/Tournament_selection">tournament selection
-      </a>.
+      Robbie looks up which strategy to follow in its genome, then is rewarded (if it picks up a can) or punished (if it hits a wall or bends over where there is no can) to determine the strategy's <em>fitness</em>. This is done on an entire population of strategies comprising the first generation, then the fittest individuals are selected using <a href="https://en.wikipedia.org/wiki/Tournament_selection">tournament selection</a>.
     </p>
 
     <section>
@@ -31,13 +30,14 @@
       <div class="columns-wrapper">
         <!-- Fitness Simulation Preview -->
         <p>Simulate a robot acting out it's genome in a random environment.</p>
-        <figure id="simulation_preview"></figure>
+        <figure id="simulation-preview"></figure>
 
         <!-- {/* GA Controls */} -->
         <section>
           <h4>Genetic Algorithm Controls</h4>
           <p>Click on <em>Start Evolution</em> below to start evolving an efficient genome for the robot.</p>
-          <button id="toggle_button">Start Evolution</button>
+          <button id="toggle-button">Start Evolution</button>
+          <button id="load-best-button">Start Evolution</button>
           <div class="logs">
             <table>
               <thead>
@@ -47,7 +47,7 @@
                   <th>Best Fitness</th>
                 </tr>
               </thead>
-              <tbody id="output_table"></tbody>
+              <tbody id="output-table"></tbody>
             </table>
           </div>
         </section>
