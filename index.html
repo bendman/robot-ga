@@ -9,7 +9,7 @@
 </head>
 <body>
 
-  <article className="ga-robot">
+  <article class="ga-robot">
     <h2>Evolve a Cleaning Robot</h2>
 
     <p>
@@ -29,35 +29,27 @@
     <section>
       <h3>Interactive Simulation</h3>
       <p>Click on <em>Run Evolution</em> below to start evolving an efficient genome for the robot.</p>
-      <div className="columns-wrapper">
+      <div class="columns-wrapper">
+        <!-- Fitness Simulation Preview -->
+        <figure id="simulation_preview"></figure>
+
         <!-- {/* GA Controls */} -->
         <section>
           <h4>Genetic Algorithm Controls</h4>
           <button id="toggle_button">Start Evolution</button>
-          <div className="logs">
+          <div class="logs">
             <table>
               <thead>
                 <tr>
                   <th>Gen #</th>
-                  <th>Mean</th>
-                  <th>Best</th>
+                  <th>Mean Fitness</th>
+                  <th>Best Fitness</th>
                 </tr>
               </thead>
-              <tbody id="output_table">
-                <!-- {this.state.logs.map((gen, i) => (
-                <tr key={i}>
-                  <td>{gen.number}</td>
-                  <td>{gen.mean}</td>
-                  <td>{gen.best}</td>
-                </tr>
-                ))} -->
-              </tbody>
+              <tbody id="output_table"></tbody>
             </table>
           </div>
         </section>
-
-        <!-- Fitness Simulation Preview -->
-        <!-- <FitnessPreview individual={this.state.best} /> -->
       </div>
     </section>
 

@@ -32,21 +32,23 @@ const getSensedState = (floorMap, x, y) => (
 );
 
 export const fitnessStep = (floorMap, individual, x, y) => {
-  let state = getSensedState(floorMap, x, y);
+  const state = getSensedState(floorMap, x, y);
   let action = individual.genome[state];
   let fitness = 0;
 
   if (action === StayPut) {
     return [x, y, fitness];
-  } else if (action === BendOver) {
+  }
+  if (action === BendOver) {
     if (floorMap[y][x] === CAN) {
       floorMap[y][x] = EMPTY;
       fitness += 10;
     } else {
       fitness--;
     }
-    return [x, y, fitness]
-  } else if (action === MoveRandom) {
+    return [x, y, fitness];
+  }
+  if (action === MoveRandom) {
     action = randomMove();
   }
 

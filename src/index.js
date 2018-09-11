@@ -1,5 +1,7 @@
-class Model extends EventTarget {
+import Simulation from './model/simulation';
 
+
+class Model extends EventTarget {
   /**
    * Setup the Model, binding callbacks and setting parameters
    * @param {HTMLElement} tableElement output data table
@@ -7,9 +9,14 @@ class Model extends EventTarget {
   constructor(tableElement) {
     super();
     this.onGenerationReceived = this.onGenerationReceived.bind(this);
+    this._generations = [];
 
     this.tableElement = tableElement;
     this.worker = new Worker('./dist/worker.js');
+  }
+
+  getGeneration(genIndex) {
+    return this._generations[genIndex];
   }
 
   start() {
@@ -27,28 +34,40 @@ class Model extends EventTarget {
   }
 
   onGenerationReceived(message) {
-    const individual = message.data.bestIndividual;
-    const genMean = message.data.meanFitness;
+    const { bestIndividual, meanFitness: genMean } = message.data;
+    const isRunningBest = !this.best || bestIndividual.fitness > this.best.fitness;
 
-    this.dispatchEvent(new CustomEvent('generation', { detail: {
-      newBest: !this.best || individual.fitness > this.best.fitness,
-      runningBest: this.best,
-      best: individual,
-      mean: genMean,
-    }}));
+    this._generations.push({
+      meanFitness: genMean,
+      bestIndividual,
+      isRunningBest,
+    });
 
-    if (!this.best || individual.fitness > this.best.fitness) {
-      this.best = individual;
-      this.dispatchEvent(new CustomEvent('best', { detail: {
-        individual,
-        genMean,
-      }}));
+    this.dispatchEvent(new CustomEvent('generation', {
+      detail: {
+        isRunningBest,
+        runningBest: this.best,
+        best: bestIndividual,
+        mean: genMean,
+      },
+    }));
+
+    if (isRunningBest) {
+      this.best = bestIndividual;
+      this.dispatchEvent(new CustomEvent('best', {
+        detail: { bestIndividual, genMean },
+      }));
     }
   }
-
 }
 
 const model = new Model(document.getElementById('output_table'));
+
+//
+// Simulation Preview
+//
+const previewTgt = document.getElementById('simulation_preview');
+const simulation = new Simulation(previewTgt);
 
 //
 // Toggling GA
@@ -65,25 +84,23 @@ toggler.addEventListener('click', () => {
   }
 });
 
-// 
+//
 // GA Results
 //
 const output = document.getElementById('output_table');
 
 model.addEventListener('generation', (event) => {
-  const { best, mean, newBest } = event.detail;
-  console.log('new best!', best, best.fitness, mean);
-  const newRow = document.createElement('tr');
-  if (newBest) {
-    newRow.classList.add('new-best');
+  const { best, mean, isRunningBest } = event.detail;
+  if (isRunningBest) {
+    simulation.set(best);
   }
-  newRow.innerHTML = `
-    <td>${best.generation}</td>
-    <td>${mean.toFixed(2)}</td>
-    <td>${best.fitness.toFixed(2)}</td>
-  `;
-
-  output.appendChild(newRow);
+  output.insertAdjacentHTML('afterbegin', `
+    <tr class="${isRunningBest ? 'new-best' : ''}" data-gen="${best.generation}">
+      <td>${best.generation}</td>
+      <td>${mean.toFixed(2)}</td>
+      <td>${best.fitness.toFixed(2)}</td>
+    </tr>
+  `);
 });
 
 window.model = model;

@@ -19,6 +19,6 @@ export const createWorld = () => {
     world.push(row);
   }
   return world;
-}
+};
 
-export const cloneWorld = (world) => world.slice().map(row => row.slice());
+export const cloneWorld = world => world.slice().map(row => row.slice());
