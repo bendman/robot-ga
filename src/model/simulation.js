@@ -23,8 +23,6 @@ const isNeighbor = (x, y, tgtX, tgtY) => (
   || (Math.abs(y - tgtY) <= 1 && x === tgtX)
 );
 
-const FRAME_TIME = 200;
-
 class Simulation {
   /**
    * Construct a Simulation instance
@@ -39,6 +37,7 @@ class Simulation {
     this.pause = this.pause.bind(this);
     this.step = this.step.bind(this);
     this.play = this.play.bind(this);
+    this._handleSpeedChange = this._handleSpeedChange.bind(this);
 
     // Create internal DOM
     this._element.innerHTML = `
@@ -50,6 +49,11 @@ class Simulation {
         <button class="sim__pause">Pause</button>
         <button class="sim__step">Step</button>
         <button class="sim__play">Start</button>
+        <select class="sim__speed">
+          <option value="${1000 / 1}">1 fps</option>
+          <option value="${1000 / 5}">5 fps</option>
+          <option value="0">Fastest</option>
+        </select>
       </footer>
     `;
     this._genDisplay = this._element.querySelector('.sim__gen');
@@ -57,6 +61,8 @@ class Simulation {
     this._pauseButton = this._element.querySelector('.sim__pause');
     this._stepButton = this._element.querySelector('.sim__step');
     this._playButton = this._element.querySelector('.sim__play');
+    this._simSpeed = this._element.querySelector('.sim__speed');
+    this._frameTime = Number.parseInt(this._simSpeed.value, 10);
     this._setup();
     this._updateButtons();
 
@@ -64,11 +70,16 @@ class Simulation {
     this._pauseButton.addEventListener('click', this.pause);
     this._stepButton.addEventListener('click', this.step);
     this._playButton.addEventListener('click', this.play);
+    this._simSpeed.addEventListener('change', this._handleSpeedChange);
   }
 
   _updateButtons() {
     this._playButton.disabled = this._isPlaying;
     this._pauseButton.disabled = !this._isPlaying;
+  }
+
+  _handleSpeedChange(e) {
+    this._frameTime = Number.parseInt(e.currentTarget.value, 10);
   }
 
   _setup() {
@@ -125,7 +136,7 @@ class Simulation {
     while (this._isPlaying && this._stepNum <= 200) {
       this.step();
       // eslint-disable-next-line no-await-in-loop
-      await sleep(FRAME_TIME);
+      await sleep(this._frameTime);
     }
 
     this._isPlaying = false;
