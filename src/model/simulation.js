@@ -34,6 +34,7 @@ class Simulation {
     this._element = simulationTgt;
     this._stepNum = 0;
     this._isPlaying = false;
+    this._fitness = 0;
     this.pause = this.pause.bind(this);
     this.step = this.step.bind(this);
     this.play = this.play.bind(this);
@@ -46,14 +47,20 @@ class Simulation {
       </header>
       <div class="sim__render"></div>
       <footer>
-        <button class="sim__pause">Pause</button>
-        <button class="sim__step">Step</button>
-        <button class="sim__play">Start</button>
-        <select class="sim__speed">
-          <option value="${1000 / 1}">1 fps</option>
-          <option value="${1000 / 5}">5 fps</option>
-          <option value="0">Fastest</option>
-        </select>
+        <section class="sim__stats">
+          <section><output class="sim__step-num"></output>/200 Steps</section>
+          <section><output class="sim__fit-points"></output> Points</section>
+        </section>
+        <section class="sim__controls">
+          <button class="sim__pause">Pause</button>
+          <button class="sim__step">Step</button>
+          <button class="sim__play">Start</button>
+          <select class="sim__speed">
+            <option value="1000">Slow</option>
+            <option value="200">Normal</option>
+            <option value="0">Fast</option>
+          </select>
+        </section>
       </footer>
     `;
     this._genDisplay = this._element.querySelector('.sim__gen');
@@ -62,6 +69,8 @@ class Simulation {
     this._stepButton = this._element.querySelector('.sim__step');
     this._playButton = this._element.querySelector('.sim__play');
     this._simSpeed = this._element.querySelector('.sim__speed');
+    this._stepOutput = this._element.querySelector('.sim__step-num');
+    this._fitnessOutput = this._element.querySelector('.sim__fit-points');
     this._frameTime = Number.parseInt(this._simSpeed.value, 10);
     this._setup();
     this._updateButtons();
@@ -114,6 +123,8 @@ class Simulation {
       </table>
     `;
     this._renderView.innerHTML = worldRender;
+    this._stepOutput.innerHTML = this._stepNum;
+    this._fitnessOutput.innerHTML = this._fitness;
   }
 
   /**
@@ -133,7 +144,7 @@ class Simulation {
     this._isPlaying = true;
     this._updateButtons();
 
-    while (this._isPlaying && this._stepNum <= 200) {
+    while (this._isPlaying && this._stepNum < 200) {
       this.step();
       // eslint-disable-next-line no-await-in-loop
       await sleep(this._frameTime);

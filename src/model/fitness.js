@@ -15,7 +15,7 @@ import {
   createWorld,
 } from './world';
 
-const TRIALS = 40;
+const TRIALS = 20;
 
 const currentBase = 1;
 const northBase   = 3;
