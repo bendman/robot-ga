@@ -5,6 +5,7 @@
   "main": "index.html",
   "files": [
     "dist",
+    "main.css",
     "index.html"
   ],
   "scripts": {
