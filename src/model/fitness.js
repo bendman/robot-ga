@@ -1,3 +1,6 @@
+// Utilities to calculate individual and population fitness by
+// simulating agent actions in an environment.
+
 import {
   MoveNorth,
   MoveSouth,

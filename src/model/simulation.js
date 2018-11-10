@@ -1,3 +1,5 @@
+// Visualization for an individual fitness run
+
 import {
   createWorld,
   cloneWorld,

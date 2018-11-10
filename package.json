@@ -9,6 +9,7 @@
     "index.html"
   ],
   "scripts": {
+    "start": "serve",
     "build": "wp --mode=production",
     "dev": "wp --mode=development --watch",
     "prepare": "npm run build"
@@ -20,6 +21,7 @@
     "url": "https://github.com/bendman/robot-ga.git"
   },
   "dependencies": {
+    "serve": "10.0.2",
     "webpack": "4.17.1",
     "webpack-command": "0.4.1"
   },
